@@ -1,0 +1,13 @@
+.idea
+*.exe
+frontend/node_modules/*
+frontend/build
+air.exe
+gin-bin.exe
+.env
+command.txt
+frontend/.env
+frontend/.env.production
+frontend/command.txt
+tmp/*
+.air.toml
