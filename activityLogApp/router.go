@@ -19,20 +19,3 @@ func GetRoute(route *gin.Engine, db *gorm.DB, hub *wsLib.Hub) *gin.Engine {
 
 	return route
 }
-
-/*
-u := "ws://localhost:8000/api/test/ws/"
-go func() {
-	ws, _, err := websocket.DefaultDialer.Dial(u, nil)
-	if err != nil {
-		log.Println(err)
-		return
-	}
-	defer ws.Close()
-	err = ws.WriteMessage(websocket.TextMessage, []byte("from go"))
-	if err != nil {
-		log.Println(err)
-		return
-	}
-}()
-*/
