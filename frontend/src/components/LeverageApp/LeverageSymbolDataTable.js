@@ -106,6 +106,7 @@ const GetCurrAssetButton = ({ leverageSymbolListRefetch }) => {
     // }, [data])
 
     const [postCurrAsset, { isLoading, isError, error, isSuccess }] = usePostCurrAssetMutation()
+
     const postCurrAssetFunc = async () => {
         await postCurrAsset()
     }
@@ -126,7 +127,7 @@ const GetCurrAssetButton = ({ leverageSymbolListRefetch }) => {
         postCurrAssetFunc()
     }
 
-    return <Button label="更新當前倉位及交易對資訊" icon="pi pi-external-link" onClick={() => hanldeBtnClick()} isLoading={isLoading} size="small" style={{ marginRight: "10px" }} />
+    return <Button label="更新當前倉位及交易對資訊" icon="pi pi-external-link" onClick={() => hanldeBtnClick()} loading={isLoading} size="small" style={{ marginRight: "10px" }} />
 }
 
 const LeverageSymbolDeleteButton = ({ leverageSymbolId, leverageSymbolListRefetch }) => {
@@ -381,15 +382,17 @@ const OrderSymbolCreateFirstGridOrderButton = ({ leverageSymbolId, leverageSymbo
                         <label htmlFor="isSimulate">模擬單</label>
                         {/* <Checkbox onChange={(e) => setIsSimulate(e.checked)} checked={isSimulate}></Checkbox> */}
                     </div>
-
+                    <br />
                     <Button
-                        label="模擬預期的下單(不會真的下單)"
+                        label="模擬預期下單(不會真的下單)"
                         icon="pi pi-check"
                         // loading={isLoading}
                         size="small"
                     />
                 </form>
-
+                <p>
+                    點擊 "模擬預期下單" 完 就會看到 預期下單的結果
+                </p>
                 <OrderSymbolDownDataTable orderSymbolDownList={orderSymbolDownList} />
                 <OrderSymbolUpDataTable orderSymbolUpList={orderSymbolUpList} />
             </Dialog>
@@ -398,7 +401,7 @@ const OrderSymbolCreateFirstGridOrderButton = ({ leverageSymbolId, leverageSymbo
 }
 
 const LeverageSymbolDataTable = () => {
-    const { data, error, isLoading, refetch } = useGetLeverageSymbolListQuery()
+    const { data, error, isFetching, refetch } = useGetLeverageSymbolListQuery()
 
     const refreshBtnClick = () => {
         refetch()
@@ -406,13 +409,18 @@ const LeverageSymbolDataTable = () => {
 
     return (
         <div>
+            <p>
+                這裡是主要是模擬預期下單的價格和數量，會根據參數，計算 往下和往上價格/數量的預掛單<br />
+                *數量的部分，會跟庫存有關，所以我先把數量相關計算程式移除，都會是0 <br />
+                可以點擊 表格內的"模擬單計算" 按鈕，再點擊 "模擬預期下單" ，就會看到計算結果
+            </p>
             <ConfirmDialog />
             <LeverageSymbolCreateButton leverageSymbolListRefetch={refetch} />
             <GetCurrAssetButton leverageSymbolListRefetch={refetch} />
-            <Button label="重新整理" onClick={refreshBtnClick} loading={isLoading} size="small" />
+            <Button label="重新整理" onClick={refreshBtnClick} loading={isFetching} size="small" />
             <DataTable
                 header={"槓桿"}
-                loading={isLoading}
+                loading={isFetching}
                 value={data?.leverageSymbols}
                 size={"small"}
                 // style={{ textAlign: "center" }}

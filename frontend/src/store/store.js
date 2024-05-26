@@ -21,6 +21,7 @@ export const store = configureStore({
     },
     middleware: (getDefaultMiddleware) => {
         return getDefaultMiddleware().concat([
+            getOrderAppApi.middleware,
             getLeverageAppApi.middleware,
             getMainAppApi.middleware,
             webSocketMiddleware,            
