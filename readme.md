@@ -21,4 +21,6 @@ Todo:
 
 
 Goroutine 背景處理架構大概長這樣
+
+
 ![img.png](img/img.png)
