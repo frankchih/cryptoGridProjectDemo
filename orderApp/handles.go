@@ -3,7 +3,6 @@ package orderApp
 import (
 	"cryptoGridProjectDemo/binanceLib"
 	"cryptoGridProjectDemo/leverageApp"
-	"fmt"
 	"github.com/adshao/go-binance/v2/futures"
 	"github.com/gin-gonic/gin"
 	"github.com/shopspring/decimal"
@@ -256,7 +255,7 @@ func (handle *Handle) CreateFirstGridOrder(ctx *gin.Context) {
 		}
 		handle.DB.Clauses(clause.Returning{}).Create(&orderSymbolDownList)
 	}
-	fmt.Println("up start")
+	//fmt.Println("up start")
 	// 網格上單
 	calcLimitOrderExceptUpList := CalcLimitOrderExceptUp(settingCalcNum, settingPriceStepPercent, marketPrice, marketPrice, pricePrecision)
 	batchOrderInputUpList := make([]*binanceLib.BatchOrderInput, 0)
@@ -387,7 +386,7 @@ func (handle *Handle) CancelAllGridOrderBySymbol(ctx *gin.Context) {
 	//	orderSymbol := cancelOrderResponse2orderSymbol(cancelOrderResponse)
 	//	cancelOrderSymbolUpdateList = append(cancelOrderSymbolUpdateList, &orderSymbol)
 	//}
-	
+
 	////直接更新全部
 	//handle.DB.Clauses(clause.OnConflict{
 	//	Columns: []clause.Column{{Name: "order_id"}}, // key column
@@ -428,7 +427,7 @@ type CalcLimitOrderExcept struct {
 
 func CalcLimitOrderExceptDown(calcNum int, priceStep, marketPrice, initPrice string, pricePrecision int) []*CalcLimitOrderExcept {
 	/*
-		計算往 "下" 單 ，刪除片段，僅留下 價錢 計算
+		計算往 "下" 單 ，刪除片段，僅留下 價錢 計算，數量直接壓0
 	*/
 	priceStepDecimal, _ := decimal.NewFromString(priceStep)
 	marketPriceDecimal, _ := decimal.NewFromString(marketPrice)
@@ -455,7 +454,7 @@ func CalcLimitOrderExceptDown(calcNum int, priceStep, marketPrice, initPrice str
 
 func CalcLimitOrderExceptUp(calcNum int, priceStep, marketPrice, initPrice string, pricePrecision int) []*CalcLimitOrderExcept {
 	/*
-		計算往 "上" 單，刪除片段，僅留下 價錢 計算
+		計算往 "上" 單，刪除片段，僅留下 價錢 計算，數量直接壓0
 	*/
 	priceStepDecimal, _ := decimal.NewFromString(priceStep)
 	marketPriceDecimal, _ := decimal.NewFromString(marketPrice)

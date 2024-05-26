@@ -17,10 +17,6 @@ func (handle *Handle) Hello(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"msg": "Hello World"})
 }
 
-//type BookmarkSaveFromChromeData struct {
-//	Bookmarks []*Bookmark `json:"bookmarks" binding:"required,omitempty"`
-//}
-
 func (handle *Handle) CreateTestActivityLog(ctx *gin.Context) {
 
 	err := CreateActivityLogTest(handle.DB, "test msg")
